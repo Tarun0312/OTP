@@ -15,7 +15,21 @@ def candidateRegistrationForm(request):
     return render(request,'registration_form.html',context)
 
 def candidateRegistration(request):
-    pass
+    if request.method=='POST':
+        username=request.POST['username']
+        # check if user already exists
+        if len(Candidate.objects.filter(username=username)):
+            userStatus=1
+        else:
+            name1=request.POST['name']
+            password1=request.POST['password']
+            ob=Candidate(name=name1,username=username,password=password1)
+            ob.save()
+            userStatus=2
+    else:
+        userStatus=3
+    context={'userStatus':userStatus}
+    return render(request,'registration.html',context)
 
 def loginView(request):
     pass

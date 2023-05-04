@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+
+{% block title %}
+  OTS-Registration Successful
+{% endblock title %}
+
+{% block menu %}
+    <a href="{% url 'OTS:login' %}">Login</a>
+{% endblock menu %}
+
+{% block content %}
+
+{% if userStatus == 1 %}
+    <div class="userStatus">
+        <p>Username already exists.Try different Username</p>
+        <a href="{% url 'OTS:registrationForm'%}">Back to Candidate Home Registration</a>
+    </div>
+
+{% elif userStatus == 2%}
+    <div class="userStatus">
+        <p>Congratulation Registered Successfully</p>
+        <a href="{% url 'OTS:login'%}">Candidate Login</a>
+    </div>
+
+{% elif userStatus == 3%}
+    <div class="userStatus">
+        <p>Oops...,Improper request</p>
+        <a href="{% url 'OTS:registrationForm'%}">Back to Candidate Home Registration</a>
+    </div>
+{% endif %}
+{% endblock content %}

@@ -7,8 +7,8 @@ class Candidate(models.Model):
     username=models.CharField(primary_key=True,max_length=20)
     password=models.CharField(max_length=15,null=False)
     name=models.CharField(null=False,max_length=100)
-    test_attempted=models.IntegerField()
-    points=models.FloatField()
+    test_attempted=models.IntegerField(default=0)
+    points=models.FloatField(default=0.0)
 
 # Question Table
 class Question(models.Model):
@@ -27,7 +27,7 @@ class Result(models.Model):
     username=models.ForeignKey(Candidate,on_delete=models.CASCADE)
     date=models.DateField(auto_now=True)
     time=models.TimeField(auto_now=True)
-    quest_attempt=models.IntegerField()
-    right=models.IntegerField()
-    wrong=models.IntegerField()
-    points=models.FloatField()
+    quest_attempt=models.IntegerField(default=0)
+    right=models.IntegerField(default=0)
+    wrong=models.IntegerField(default=0)
+    points=models.FloatField(default=0.0)
