@@ -6,9 +6,27 @@
 {% endblock title %}
 
 {% block menu %}
-    <a href="{% url 'OTS:login' %}">Login</a>
+ <a href="{% url 'OTS:login'%}">Login</a>
 {% endblock menu %}
 
 {% block content %}
-<p>Welcome to Online Testing System</p>
+<div class="all-forms">
+    <form action="{% url 'OTS:storeCandidate'%}" method="post">
+        {% csrf_token %}
+        {% for field in fm %}
+        <div>
+            {{field.label_tag}}
+        </div>
+        <div>
+            {{field}}
+        </div>
+        {% endfor %}
+        <div>
+            <br>
+            <input type="submit" value="Register">
+            <input type="reset" value="Reset">
+        </div> 
+    </form>
+    Already have an account <a href="{% url 'OTS:login'%}">Click here</a>
+</div>
 {% endblock content %}

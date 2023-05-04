@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import *
+from .forms import *
 
 # Create your views here.
 
@@ -10,7 +11,8 @@ def welcome(request):
     return HttpResponse(template.render())
 
 def candidateRegistrationForm(request):
-    return render(request,'registration_form.html')
+    context={'fm':CandidateRegistrationForm()}
+    return render(request,'registration_form.html',context)
 
 def candidateRegistration(request):
     pass
