@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Candidate Home
+{% endblock title %}
+
+{% block menu %}
+    <a href="{% url 'OTS:login' %}">Logout</a>
+{% endblock menu %}
+
+{% block content %}
+<h1>Candidate Home,Welcome {{request.session.name}} to your home page</h1>
+
+<!-- Test Papers -->
+<div class="button-link">
+    <a href="{% url 'OTS:testPaper' %}?n=1">Test of 1 question</a>
+</div>
+
+<div class="button-link">
+    <a href="{% url 'OTS:testPaper' %}?n=3">Test of 3 question</a>
+</div>
+<div class="button-link">
+    <a href="{% url 'OTS:testPaper' %}?n=5">Test of 5 question</a>
+</div>
+
+
+<!-- Test History -->
+<div class="button-link">
+    <a href="{% url 'OTS:testHistory' %}?n=5">Test History</a>
+</div>
+
+
+{% endblock content %}
