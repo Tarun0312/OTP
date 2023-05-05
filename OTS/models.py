@@ -4,7 +4,7 @@ from django.db import models
 
 # Candidate Table
 class Candidate(models.Model):
-    username=models.CharField(primary_key=True,max_length=20)
+    username=models.CharField(primary_key=True,max_length=40)
     password=models.CharField(max_length=15,null=False)
     name=models.CharField(null=False,max_length=100)
     test_attempted=models.IntegerField(default=0)

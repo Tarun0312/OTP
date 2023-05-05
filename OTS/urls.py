@@ -7,10 +7,10 @@ urlpatterns = [
     path('new-candidate/',candidateRegistrationForm,name='registrationForm'),
     path('store-candidate/',candidateRegistration,name='storeCandidate'),
     path('login/',loginView,name='login'),
-    path('candidate-home/',candidateHome),
-    path('testpaper/',testpaper),
+    path('candidate-home/',candidateHome,name='home'),
+    path('testpaper/',testpaper,name='testPaper'),
     path('calculate-result/',calculateTestResult),
-    path('test-history/',testResultHistory),
+    path('test-history/',testResultHistory,name='testHistory'),
     path('show-result/',showTestResult),
-    path('logout/',logoutView)
+    path('logout/',logoutView,name='logout')
 ]

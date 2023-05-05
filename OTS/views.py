@@ -27,15 +27,37 @@ def candidateRegistration(request):
             ob.save()
             userStatus=2
     else:
-        userStatus=3
+        userStatus=3  #Request method is not POST
     context={'userStatus':userStatus}
     return render(request,'registration.html',context)
 
 def loginView(request):
-    pass
+    if request.method=='POST':
+        clf=CandidateLoginForm(request.POST)
+        valusername=request.POST['username']
+        valpassword=request.POST['password']
+        candidate=Candidate.objects.filter(username=valusername,password=valpassword)
+        if len(candidate)==0:
+            loginError="Invalid username or Password"
+            return render(request,'login.html',{'loginError':loginError})
+        else:
+            #login success
+
+            # session variable exists accross the pages and are stored in server
+            request.session['username']=candidate[0].username
+            request.session['name']=candidate[0].name
+            res=HttpResponseRedirect('/OTS/candidate-home/')
+    else:
+      clf=CandidateLoginForm()
+      res=render(request,'login.html',{'clf':clf})
+    return res
 
 def candidateHome(request):
-    pass
+    if 'name' not in request.session.keys():
+        res=HttpResponseRedirect('/OTS/login/')
+    else:
+        res=render(request,'candidate_home.html')
+    return res
 
 def testpaper(request):
     pass
@@ -50,4 +72,4 @@ def showTestResult(request):
     pass
 
 def logoutView(request):
-    pass
+    return HttpResponseRedirect('/OTS/login/')

@@ -9,3 +9,14 @@ class CandidateRegistrationForm(forms.ModelForm):
             'password':forms.PasswordInput(render_value=True)
         }
         
+class CandidateLoginForm(forms.ModelForm):
+    class Meta:
+        model=Candidate
+        fields=('username','password')
+        widgets={
+            'password':forms.PasswordInput(render_value=True)
+        }
+        labels={
+            'name':'Name::',
+            'password':'Password::'
+        }
