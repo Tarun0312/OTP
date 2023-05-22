@@ -13,4 +13,4 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display=['resultid','username','date','time','quest_attempt','right','wrong','points']
+    list_display=['resultid','username','date','time','attempt','right','wrong','points']

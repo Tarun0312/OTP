@@ -9,8 +9,8 @@ urlpatterns = [
     path('login/',loginView,name='login'),
     path('candidate-home/',candidateHome,name='home'),
     path('testpaper/',testpaper,name='testPaper'),
-    path('calculate-result/',calculateTestResult),
+    path('calculate-result/',calculateTestResult,name='calculateTest'),
     path('test-history/',testResultHistory,name='testHistory'),
-    path('show-result/',showTestResult),
+    path('show-result/',showTestResult,name='result'),
     path('logout/',logoutView,name='logout')
 ]

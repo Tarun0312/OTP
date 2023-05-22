@@ -3,6 +3,7 @@ from django.template import loader
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import *
 from .forms import *
+import random
 
 # Create your views here.
 
@@ -60,10 +61,61 @@ def candidateHome(request):
     return res
 
 def testpaper(request):
-    pass
+    if 'name' not in request.session.keys():
+        res=HttpResponseRedirect("login")
+    else:
+        question_pool=Question.objects.all()
+        n=int(request.GET['n'])
+        random.shuffle(list(question_pool))
+        question_list=question_pool[:n]
+        context={'questions':question_list}
+        res=render(request,'testpaper.html',context)
+    return res
+
 
 def calculateTestResult(request):
-    pass
+    if 'name' not in request.session.keys():
+        res=HttpResponseRedirect('login')
+    else:
+        total_right=0
+        total_wrong=0
+        total_attempted=0
+        question_list=[]
+        for k in request.POST:
+            if k.startswith('qno'):
+                question_list.append(int(k))
+        
+        for n in question_list:
+            question=Question.objects.get(qid=n)
+            try:
+                if question.ans==request.get['q'+str(n)]:
+                    total_right+=1
+                else:
+                    total_wrong+=1
+                total_attempted+=1
+            except:
+                pass
+            total_points=((total_right-total_wrong)/len(question_list))*10
+
+            # store it in result table
+            result=Result()
+            result.username=Candidate.objects.get(request.session['usename'])
+            result.right=total_right
+            result.wrong=total_wrong
+            result.attempt=total_attempted
+            result.points=total_points
+            result.save()
+
+            # update candidate table
+            candidate=Candidate.objects.get(request.session['username'])
+            candidate.test_attempted+=1
+            candidate.points=(candidate.points*(candidate.test_attempted-1)+total_points)/candidate.test_attempted
+            candidate.save()
+
+            return HttpResponseRedirect('result')
+            
+            
+                
 
 def testResultHistory(request):
     pass
@@ -72,4 +124,6 @@ def showTestResult(request):
     pass
 
 def logoutView(request):
-    return HttpResponseRedirect('/OTS/login/')
+    if 'name' in request.session.keys():
+        res=HttpResponseRedirect('/OTS/login/')
+    return res

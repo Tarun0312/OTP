@@ -27,7 +27,7 @@ class Result(models.Model):
     username=models.ForeignKey(Candidate,on_delete=models.CASCADE)
     date=models.DateField(auto_now=True)
     time=models.TimeField(auto_now=True)
-    quest_attempt=models.IntegerField(default=0)
+    attempt=models.IntegerField(default=0)
     right=models.IntegerField(default=0)
     wrong=models.IntegerField(default=0)
     points=models.FloatField(default=0.0)
