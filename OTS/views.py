@@ -121,7 +121,13 @@ def testResultHistory(request):
     pass
 
 def showTestResult(request):
-    pass
+    if 'name' not in request.session['username']:
+        HttpResponseRedirect('login')
+    else:
+        candidate=Candidate.objects.get(username=request.session['username'])
+        result=Result.objects.get(username=candidate.username)
+        context={'result':result,'candidate':candidate}
+        return render(request,'result.html',context)
 
 def logoutView(request):
     if 'name' in request.session.keys():
