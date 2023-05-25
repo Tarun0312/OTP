@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+
+{% block menu %}
+<a href="{% url 'OTS:logout'%}">Logout</a>
+{% endblock menu %}
+
+{% block content %}
+  <table>
+    <thead>
+        <tr>
+            <th>RESULT</th>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Attempt</th>
+            <th>Right</th>
+            <th>Wrong</th>
+            <th>Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in result %}
+        <tr>
+            <td>{{r.date}}</td>
+            <td>{{r.time}}</td>
+            <td>{{r.attempt}}</td>
+            <td>{{r.right}}</td>
+            <td>{{r.wrong}}</td>
+            <td>{{r.points}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+{% endblock content %}

@@ -75,44 +75,50 @@ def testpaper(request):
 
 def calculateTestResult(request):
     if 'name' not in request.session.keys():
-        res=HttpResponseRedirect('login')
-    else:
-        total_right=0
-        total_wrong=0
-        total_attempted=0
-        question_list=[]
-        for k in request.POST:
-            if k.startswith('qno'):
-                question_list.append(int(k))
+        res=HttpResponseRedirect('/OTS/login/')
+    total_right=0
+    total_wrong=0
+    total_attempt=0
+    question_id_list=[]
+    for k in request.POST:
+        if k.startswith('qno'):
+           question_id_list.append(int(request.POST[k]))
+           print(question_id_list)
         
-        for n in question_list:
+    for n in question_id_list:
             question=Question.objects.get(qid=n)
+            print("n",n,end=' ')
             try:
-                if question.ans==request.get['q'+str(n)]:
+                if question.ans==request.POST['q'+str(n)]:
                     total_right+=1
-                else:
+                    total_attempt+=1
+                    print(request.get['q'+str(n)],"tr",total_right)
+                elif question.ans!=request.POST['q'+str(n)]:
                     total_wrong+=1
-                total_attempted+=1
+                    total_attempt+=1
+                    print(request.get['q'+str(n)],"tr",total_wrong)
             except:
                 pass
-            total_points=((total_right-total_wrong)/len(question_list))*10
+    total_points=(total_right-total_wrong)/len(question_id_list)*10
 
-            # store it in result table
-            result=Result()
-            result.username=Candidate.objects.get(request.session['usename'])
-            result.right=total_right
-            result.wrong=total_wrong
-            result.attempt=total_attempted
-            result.points=total_points
-            result.save()
+    # store it in result table
+    result=Result()
+    result.username=Candidate.objects.get(username=request.session['username'])
+    result.right=total_right
+    result.wrong=total_wrong            
+    result.attempt=total_attempt
+    result.points=total_points
+    print("points",result.points,"attempt",result.attempt,"uname",result.username)
+    result.save()
 
-            # update candidate table
-            candidate=Candidate.objects.get(request.session['username'])
-            candidate.test_attempted+=1
-            candidate.points=(candidate.points*(candidate.test_attempted-1)+total_points)/candidate.test_attempted
-            candidate.save()
-
-            return HttpResponseRedirect('result')
+    # update candidate table
+    candidate=Candidate.objects.get(username=request.session['username'])
+    candidate.test_attempted+=1
+    candidate.points=(candidate.points*(candidate.test_attempted-1)+total_points)/candidate.test_attempted
+    candidate.save()
+    print("cpoints",candidate.points,"attempt",candidate.test_attempted)
+    res=HttpResponseRedirect('/OTS/show-result/')
+    return res
             
             
                 
@@ -121,13 +127,14 @@ def testResultHistory(request):
     pass
 
 def showTestResult(request):
-    if 'name' not in request.session['username']:
-        HttpResponseRedirect('login')
-    else:
-        candidate=Candidate.objects.get(username=request.session['username'])
-        result=Result.objects.get(username=candidate.username)
-        context={'result':result,'candidate':candidate}
-        return render(request,'result.html',context)
+    if 'name' not in request.session.keys():
+        res=HttpResponseRedirect('/OTS/login/')
+    # fetch latest result from result table
+    result=Result.objects.filter(resultid=Result.objects.latest('resultid').resultid,username=request.session['username'])        
+    context={'result':result}
+    res=render(request,'result.html',context)
+
+    return res
 
 def logoutView(request):
     if 'name' in request.session.keys():
