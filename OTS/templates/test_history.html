@@ -1,11 +1,19 @@
-{% extends 'master.html' %}
+{% extends "master.html" %}
+
+{% block title %}
+  Online Testing System
+{% endblock title %}
 
 {% block menu %}
-<a href="{% url 'OTS:logout'%}">Logout</a>
+    <a href="{% url 'OTS:home'%}">Candidate Home</a>
+    <br>
+    <a href="{% url 'OTS:login' %}">Logout</a>
 {% endblock menu %}
 
 {% block content %}
-  <table border>
+<p>Test History</p>
+<h3>Hi, {{candidate.username}},you have scored {{candidate.points}} in {{candidate.test_attempted}} attempts</h3>
+<table border>
     <thead>
         <tr>
             <th colspan="6">RESULT</th>
@@ -32,5 +40,5 @@
         {% endfor %}
       
     </tbody>
-  </table>
+</table>
 {% endblock content %}

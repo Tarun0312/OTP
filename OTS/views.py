@@ -124,7 +124,15 @@ def calculateTestResult(request):
                 
 
 def testResultHistory(request):
-    pass
+    if 'name' not in request.session.keys():
+        res=HttpResponseRedirect('login')
+    candidate=Candidate.objects.filter(username=request.session['username'])
+    result=Result.objects.filter(username_id=candidate[0].username)
+    context={'candidate':candidate[0],'result':result}
+    res=render(request,'test_history.html',context)
+    return res
+
+
 
 def showTestResult(request):
     if 'name' not in request.session.keys():
