@@ -5,10 +5,36 @@
 {% endblock title %}
 
 {% block menu %}
-    <a href="{% url 'OTS:registrationForm' %}">Signup</a>
+    <a href="{% url 'OTS:registrationForm' %}">Registration</a>
     <a href="{% url 'OTS:login' %}">Login</a>
 {% endblock menu %}
 
 {% block content %}
-<p>Welcome to Online Testing System</p>
+<h1>Welcome to Online Testing System</h1>
+<div class="all-forms">
+  {% if loginError %}
+    <div id="error">{{loginError}}</div>
+  {% else %}
+  <form class="reg-form" action="{% url 'OTS:login' %}" method="POST">
+      {% csrf_token %}
+      {% for field in clf %}
+      <p>
+          <label for="">{{field.label}}</label>
+          {{field}}
+      </p>
+       
+      {% endfor %}
+
+      <div class="form-unit">
+          <input type="submit" value="Login" class="button">
+          <input type="reset" value="Clear" class="button">
+      </div>
+      <div class="new-user">
+          New User <a href="{% url 'OTS:registrationForm' %}">Signup</a>
+      </div>
+     
+  </form>
+ 
+  {% endif %}
+</div>
 {% endblock content %}

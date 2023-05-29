@@ -17,6 +17,6 @@ class CandidateLoginForm(forms.ModelForm):
             'password':forms.PasswordInput(render_value=True)
         }
         labels={
-            'name':'Name::',
-            'password':'Password::'
+            'name':'Name',
+            'password':'Password'
         }

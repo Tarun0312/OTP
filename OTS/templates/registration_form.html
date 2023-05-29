@@ -10,7 +10,7 @@
 {% endblock menu %}
 
 {% block content %}
-<div class="all-forms">
+<div class="reg-form">
     <form action="{% url 'OTS:storeCandidate'%}" method="post">
         {% csrf_token %}
         {% for field in fm %}
@@ -23,8 +23,8 @@
         {% endfor %}
         <div>
             <br>
-            <input type="submit" value="Register">
-            <input type="reset" value="Reset">
+            <input type="submit" value="Register" class="button">
+            <input type="reset" value="Reset" class="button">
         </div> 
     </form>
     Already have an account <a href="{% url 'OTS:login'%}">Click here</a>

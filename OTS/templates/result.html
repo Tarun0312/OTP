@@ -1,11 +1,13 @@
 {% extends 'master.html' %}
 
 {% block menu %}
+<a href="{% url 'OTS:testHistory'%}">Test History</a>
+<a href="{% url 'OTS:home'%}">Candidate Home</a>
 <a href="{% url 'OTS:logout'%}">Logout</a>
 {% endblock menu %}
 
 {% block content %}
-  <table border>
+  <table>
     <thead>
         <tr>
             <th colspan="6">RESULT</th>

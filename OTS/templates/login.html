@@ -12,26 +12,27 @@
 <div class="all-forms">
         {% if loginError %}
           <div id="error">{{loginError}}</div>
-        {% endif %}
+        {% else %}
+        <form class="reg-form" action="{% url 'OTS:login' %}" method="POST">
+            {% csrf_token %}
+            {% for field in clf %}
+            <p>
+                <label for="">{{field.label}}</label>
+                {{field}}
+            </p>
+             
+            {% endfor %}
     
-    <form action="{% url 'OTS:login' %}" method="POST">
-        {% csrf_token %}
-        {% for field in clf %}
-        <p>
-            {{field.label}}
-        </p>
-         
-        <p>
-            {{field}}
-        </p>
-         
-        {% endfor %}
-
-        <div class="form-unit">
-            <input type="submit" value="Login">
-            <input type="reset" value="Clear">
-        </div>
-    </form>
-    New User <a href="{% url 'OTS:registrationForm' %}">Signup</a>
+            <div class="form-unit">
+                <input type="submit" value="Login" class="button">
+                <input type="reset" value="Clear" class="button">
+            </div>
+            <div class="new-user">
+                New User <a href="{% url 'OTS:registrationForm' %}">Signup</a>
+            </div>
+           
+        </form>
+       
+        {% endif %}
 </div>
 {% endblock content %}

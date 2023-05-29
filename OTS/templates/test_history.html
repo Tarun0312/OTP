@@ -6,14 +6,15 @@
 
 {% block menu %}
     <a href="{% url 'OTS:home'%}">Candidate Home</a>
-    <br>
     <a href="{% url 'OTS:login' %}">Logout</a>
 {% endblock menu %}
 
 {% block content %}
-<p>Test History</p>
-<h3>Hi, {{candidate.username}},you have scored {{candidate.points}} in {{candidate.test_attempted}} attempts</h3>
-<table border>
+<div class="inner-content">
+    <h3>Test History</h3>
+    <p>Hi, <span class="special">{{candidate.username}}</span>,you have attempted in total <span class="special">{{candidate.test_attempted}}</span> attempts and you have scored <span class="special">{{candidate.points}}</span> points on the scale of 10</p>
+</div>
+<table>
     <thead>
         <tr>
             <th colspan="6">RESULT</th>

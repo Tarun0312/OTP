@@ -5,11 +5,12 @@ OTS-Testpaper
 {% endblock title %}
 
 {% block menu %}
-
+<a href="{% url 'OTS:home'%}">Candidate Home</a>
+<a href="{% url 'OTS:login' %}">Logout</a>
 {% endblock menu %}
 
 {% block content %}
-<form action="{% url 'OTS:calculateTest' %}" method="POST">
+<form class="mcq" action="{% url 'OTS:calculateTest' %}" method="POST">
   {% csrf_token %}
   {% for question in questions %}
   <input type="hidden" name="qno{{question.qid}}" value="{{question.qid}}">
@@ -37,6 +38,6 @@ OTS-Testpaper
     {{question.d}}
   </div>
   {% endfor %}
-  <input type="submit" value="Submit">
+  <input type="submit" value="Submit"  class="button">
 </form>
 {% endblock content %}

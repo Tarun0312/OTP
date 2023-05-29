@@ -1,0 +1,83 @@
+form{
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 20px;
+    display: table;
+    width: 100%;
+}
+
+input{
+    display: block;
+    width: 30%;
+    margin-bottom:20px ;
+    height: 22px;
+    font-size: 15px;
+}
+
+.question{
+    color: #eb2020;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.options{
+    font-size:16px ;
+}
+
+.options input{
+    display: inline;
+    width: fit-content;
+    height: 15px;
+}
+
+.reg-form{
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #AFD275 ;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    
+}
+
+input{
+width: 100%;
+margin-top: 10px;
+}
+
+.form-unit{
+    width: 70%;
+}
+
+.form-unit input{
+    margin: 0 auto;
+    width: 50%;
+    margin-top: 10px;
+}
+
+.new-user{
+    margin-top: 10px;
+}
+.button{
+    width: 17%;
+    height: 10%;
+    background-color: rgba(55, 55, 248, 0.974);
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 10p 10px grey;
+}
+
+.button:hover{
+    background-color: #eb2020;
+}
+
+.mcq{
+    background-color: #AFD275 ;
+    width: 90%;
+}

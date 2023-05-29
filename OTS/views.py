@@ -8,8 +8,27 @@ import random
 # Create your views here.
 
 def welcome(request):
-    template=loader.get_template('welcome.html')
-    return HttpResponse(template.render())
+    # template=loader.get_template('welcome.html')
+    # return HttpResponse(template.render())
+    if request.method=='POST':
+        clf=CandidateLoginForm(request.POST)
+        valusername=request.POST['username']
+        valpassword=request.POST['password']
+        candidate=Candidate.objects.filter(username=valusername,password=valpassword)
+        if len(candidate)==0:
+            loginError="Invalid username or Password"
+            return render(request,'login.html',{'loginError':loginError})
+        else:
+            #login success
+
+            # session variable exists accross the pages and are stored in server
+            request.session['username']=candidate[0].username
+            request.session['name']=candidate[0].name
+            res=HttpResponseRedirect('/OTS/candidate-home/')
+    else:
+      clf=CandidateLoginForm()
+      res=render(request,'login.html',{'clf':clf})
+    return res
 
 def candidateRegistrationForm(request):
     context={'fm':CandidateRegistrationForm()}
@@ -64,9 +83,9 @@ def testpaper(request):
     if 'name' not in request.session.keys():
         res=HttpResponseRedirect("login")
     else:
-        question_pool=Question.objects.all()
+        question_pool=list(Question.objects.all())
         n=int(request.GET['n'])
-        random.shuffle(list(question_pool))
+        random.shuffle(question_pool)
         question_list=question_pool[:n]
         context={'questions':question_list}
         res=render(request,'testpaper.html',context)

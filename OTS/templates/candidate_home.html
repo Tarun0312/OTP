@@ -9,9 +9,13 @@
 {% endblock menu %}
 
 {% block content %}
-<h1>Candidate Home,Welcome {{request.session.name}} to your home page</h1>
+<div class="inner-content">
+    <h3>Welcome <b>{{request.session.name}}</b> to your home page</h3>
+</div>
+
 
 <!-- Test Papers -->
+
 <div class="button-link">
     <a href="{% url 'OTS:testPaper' %}?n=1">Test of 1 question</a>
 </div>
