@@ -100,22 +100,23 @@ def calculateTestResult(request):
     total_attempt=0
     question_id_list=[]
     for k in request.POST:
+        print(k)
         if k.startswith('qno'):
            question_id_list.append(int(request.POST[k]))
-           print(question_id_list)
+        #    print(question_id_list,request.POST[k],int(request.POST[k]))
         
     for n in question_id_list:
             question=Question.objects.get(qid=n)
-            print("n",n,end=' ')
+            # print("n",n,end=' ')
             try:
                 if question.ans==request.POST['q'+str(n)]:
                     total_right+=1
                     total_attempt+=1
-                    print(request.get['q'+str(n)],"tr",total_right)
+                    # print(request.get['q'+str(n)],"tr",total_right)
                 elif question.ans!=request.POST['q'+str(n)]:
                     total_wrong+=1
                     total_attempt+=1
-                    print(request.get['q'+str(n)],"tr",total_wrong)
+                    # print(request.get['q'+str(n)],"tr",total_wrong)
             except:
                 pass
     total_points=(total_right-total_wrong)/len(question_id_list)*10
@@ -127,7 +128,7 @@ def calculateTestResult(request):
     result.wrong=total_wrong            
     result.attempt=total_attempt
     result.points=total_points
-    print("points",result.points,"attempt",result.attempt,"uname",result.username)
+    # print("points",result.points,"attempt",result.attempt,"uname",result.username)
     result.save()
 
     # update candidate table
@@ -135,7 +136,7 @@ def calculateTestResult(request):
     candidate.test_attempted+=1
     candidate.points=(candidate.points*(candidate.test_attempted-1)+total_points)/candidate.test_attempted
     candidate.save()
-    print("cpoints",candidate.points,"attempt",candidate.test_attempted)
+    # print("cpoints",candidate.points,"attempt",candidate.test_attempted,total_points)
     res=HttpResponseRedirect('/OTS/show-result/')
     return res
             
@@ -145,9 +146,9 @@ def calculateTestResult(request):
 def testResultHistory(request):
     if 'name' not in request.session.keys():
         res=HttpResponseRedirect('login')
-    candidate=Candidate.objects.filter(username=request.session['username'])
-    result=Result.objects.filter(username_id=candidate[0].username)
-    context={'candidate':candidate[0],'result':result}
+    candidate=Candidate.objects.get(username=request.session['username'])
+    result=Result.objects.filter(username_id=candidate.username)
+    context={'candidate':candidate,'result':result}
     res=render(request,'test_history.html',context)
     return res
 

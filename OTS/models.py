@@ -10,6 +10,9 @@ class Candidate(models.Model):
     test_attempted=models.IntegerField(default=0)
     points=models.FloatField(default=0.0)
 
+    def __str__(self):
+        return self.username
+
 # Question Table
 class Question(models.Model):
     qid=models.BigAutoField(primary_key=True,auto_created=True)
