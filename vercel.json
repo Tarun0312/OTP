@@ -20,7 +20,7 @@
         },
         {
             "src": "/(.*)",
-            "destination": "myproject/wsgi.py"
+            "dest": "myproject/wsgi.py"
         }
     ]
 }
